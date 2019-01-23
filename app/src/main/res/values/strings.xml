@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Oblako</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="error_text">Ошибка</string>
+    <string name="error_button">Попробовать снова</string>
+    <string name="newTodo">Новая задача...</string>
+    <string name="createTodo">ДОБАВИТЬ</string>
+    <string name="server">https://mytaskoblako.herokuapp.com/</string>
+</resources>

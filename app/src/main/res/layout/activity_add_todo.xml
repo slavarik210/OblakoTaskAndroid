@@ -8,96 +8,96 @@
     android:gravity="center">
 
     <LinearLayout
-        android:id="@+id/TodoHeader"
-        android:fillViewport="true"
-        android:background="@color/backgroundColor"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:context="com.example.android.planner.NewTodoActivity">
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Категория:"
-                android:textSize="20sp"
-                android:padding="12dp"/>
-            <Spinner
-                android:id="@+id/projectSpinner"
-                android:textSize="20sp"
-                android:padding="12dp"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-            </Spinner>
-        </LinearLayout>
-        <View
-            android:layout_height="1px"
-            android:layout_width="match_parent"
-            android:background="@color/systemShadow"
-            />
-        <ListView
-            android:id="@+id/projectList"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/TodoBottom"
-        android:orientation="vertical"
-        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/systemWhiteColor"
+        android:orientation="vertical">
 
         <View
-            android:layout_height="1px"
             android:layout_width="match_parent"
-            android:background="@color/systemShadow"/>
+            android:layout_height="1px"
+            android:background="@color/systemShadow" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundColor"
+            android:gravity="left"
+            android:padding="8dp"
+            android:paddingLeft="15dp"
+            android:text="Задача"
+            android:textSize="20dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:visibility="visible"
+            fontPath="fonts/OpenSans-Semibold.ttf"/>
 
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:background="@drawable/border"
+            android:hint="@string/newTodo"
             android:padding="15dp"
-            android:hint="@string/newTodo"/>
+            android:textSize="16sp"
+            android:layout_marginLeft="15dp"
+
+            android:layout_marginTop="15dp"
+
+            android:layout_marginBottom="20dp"
+
+            android:layout_marginRight="15dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/TodoHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/backgroundColor"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        tools:context="com.example.android.planner.NewTodoActivity">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/systemShadow" />
 
         <LinearLayout
-            android:id="@+id/buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/backgroundColor">
+            android:orientation="horizontal">
 
-            <Button
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:background="@color/placeholderColor"
-                android:id="@+id/buttoncancel"
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="@string/cancel"
-                android:textColor="@color/systemWhiteColor"
-                android:textSize="12sp"/>
+                android:background="@color/backgroundColor"
+                android:gravity="left"
+                android:padding="8dp"
+                android:paddingLeft="15dp"
+                android:text="Категория"
+                android:textSize="20dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="visible"
+                fontPath="fonts/OpenSans-Semibold.ttf" />
 
-            <Button
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:background="@color/accentColor"
-                android:id="@+id/buttoncreate"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="@string/createTodo"
-                android:textColor="@color/systemWhiteColor"
-                android:textSize="12sp"/>
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/projectList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/systemWhiteColor"
+            android:cacheColorHint="@color/accentColor"
+            android:choiceMode="singleChoice"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:outlineAmbientShadowColor="@color/accentColor"
+            android:outlineSpotShadowColor="@color/accentColor"></ListView>
 
     </LinearLayout>
 

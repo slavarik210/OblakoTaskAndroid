@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,17 +43,17 @@ public class AddTodoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_todo);
         context = this;
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.oblako);
+        getSupportActionBar().setCustomView(R.layout.addtodoblank);
         getDataFromParent();
-
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         projectList = findViewById(R.id.projectList);
 
-        projectSpinner = (Spinner)findViewById(R.id.projectSpinner);
+        //projectSpinner = (Spinner)findViewById(R.id.projectSpinner);
         setSpinnerData();
-        projectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        projectList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                setListViewData(i);
             }
 
             @Override
@@ -59,44 +61,45 @@ public class AddTodoActivity extends AppCompatActivity {
 
             }
         });
-
         editText = (EditText) findViewById(R.id.editText);
 
-        cancelBtn = findViewById(R.id.buttoncancel);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        createBtn = findViewById(R.id.buttoncreate);
-        createBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(editText.getText() == null || editText.getText().toString().equals("")){
-                    return;
-                }
-                LinearLayout header = (LinearLayout)findViewById(R.id.TodoHeader);
-                header.setVisibility(View.GONE);
-                LinearLayout bottom = (LinearLayout)findViewById(R.id.TodoBottom);
-                bottom.setVisibility(View.GONE);
-                JsonObject params = new JsonObject();
-                params.addProperty("text", editText.getText().toString());
-                params.addProperty("project_id", projectSpinner.getSelectedItemPosition() + 1);
-                Ion.with(MainActivity.context).load("POST",MainActivity.context.getResources().getString(R.string.server) + "todos/")
-                        .setJsonObjectBody(params)
-                        .asJsonObject()
-                        .setCallback(new FutureCallback<JsonObject>() {
-                            @Override
-                            public void onCompleted(Exception e, JsonObject result) {
-                                setResult(1);
-                                finish();
-                            }
-                        });
-            }
-        });
     }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_option, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        int id = item.getItemId();
+        if(editText.getText() == null || editText.getText().toString().equals("")){
+            return false;
+        }
+        LinearLayout header = (LinearLayout)findViewById(R.id.TodoHeader);
+        header.setVisibility(View.GONE);
+        LinearLayout bottom = (LinearLayout)findViewById(R.id.TodoBottom);
+        bottom.setVisibility(View.GONE);
+        JsonObject params = new JsonObject();
+        params.addProperty("text", editText.getText().toString());
+        params.addProperty("project_id", projectList.getCheckedItemPosition() + 1);
+        Ion.with(MainActivity.context).load("POST",MainActivity.context.getResources().getString(R.string.server) + "todos/")
+                .setJsonObjectBody(params)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        setResult(1);
+                        finish();
+                    }
+                });
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -135,17 +138,16 @@ public class AddTodoActivity extends AppCompatActivity {
             _projects.add(p.title);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, _projects);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, _projects);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
-        projectSpinner.setAdapter(adapter);
-        projectSpinner.setPrompt("Название");
+        projectList.setAdapter(adapter);
     }
 
-    private void setListViewData(int index){
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.projects_cell, base.get(index).todos);
-        projectList.setAdapter(listAdapter);
-    }
+//    private void setListViewData(int index){
+//        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.projects_cell, base.get(index).todos);
+//        projectList.setAdapter(listAdapter);
+//    }
 
 
     private class ThisProject {
